@@ -1,89 +1,30 @@
 class Table:
 
     #Attribs
-    header = " _____________________________________________\n|      Name      |  Amount  | Client Purchases|\n|----------------|----------|-----------------|"
-    cell =   "                                              \n|                |          |                 |\n|----------------|----------|-----------------|"
-
+    header = " _____________________________________________________\n|      Name      |  Current Amount  | Client Purchases|\n|----------------|------------------|-----------------|"
     cellsList = []
 
 
-    def formatTable(self,pStock,pBought):
+    #Function to set the table
+    def setTable(self,pOrder,pStock):
 
-        #Reset Table
-        self.cellsList = []
+        #Init the final list of table with the header
+        self.cellsList = [self.header]
 
-        #Get what was bought and how many
-        referenceBought = pBought[0]
-        amountBought = pBought[1]
-
-        #Determine how many cells are required by counting number of differents items in stock
-        cellsCounter = len(pStock)
-
-        #Split stock into two list to print them separately
-        fruitsList = []
-        amountList = []
-
-        for key, value in pStock.items():
-            fruitsList.append(key)
-            amountList.append(value)
-
-
-        # Add the header of table
-        self.cellsList.append(self.header)
-
+        #Loop to write all lines
+        stockLength = len(pStock)
         cursor = 0
-        while cursor < cellsCounter:
 
+        while cursor < stockLength:
 
+            if list(pStock.keys())[cursor] == pOrder[0]:
 
+                cell ="                                                      \n|"+"{0}".format(list(pStock.keys())[cursor]).center(16," ")+"|"+"{0}".format(list(pStock.values())[cursor]).center(18," ")+"|"+"-{0}".format(pOrder[1]).center(17," ")+"|\n|----------------|------------------|-----------------|"
+            else:
+                cell ="                                                      \n|"+"{0}".format(list(pStock.keys())[cursor]).center(16," ")+"|"+"{0}".format(list(pStock.values())[cursor]).center(18," ")+"|"+"".center(17," ")+"|\n|----------------|------------------|-----------------|"
 
-            #Create a buffer cell which will be edited
-            currentCell = list(self.cell)
-
-            #Split fruits name and amount to insert them into a string
-            currentFruit = list(fruitsList[cursor])
-            currentValue = list(str(amountList[cursor]))
-
-            #Insert name into the string
-            i = 0
-            for char in currentFruit:
-                currentCell[51+i] = char
-                i += 1
-
-            #Insert amount into the string
-            j = 0
-            for val in currentValue:
-                currentCell[68+j] = val
-                j += 1
-
-
-            #Add the edited cell with name and amount to a list to draw all of them later
-            processedCell = "".join(currentCell)
-            self.cellsList.append(processedCell)
-
-            #Increments cursor
+            self.cellsList.append(cell)
             cursor += 1
-
-
-        #Insert the purchases
-        k = 0
-        index = 0
-        while index == 0:
-            if fruitsList[k] == referenceBought:
-                index = k + 1
-            k += 1
-
-        editLine = list(self.cellsList[index])
-        splitRef = list(str((amountBought)))
-
-        l = 0
-        for element in splitRef:
-            editLine[81] = '-'
-            editLine[82+l] = element
-            l += 1
-
-        processedLine = "".join(editLine)
-        self.cellsList[index] = processedLine
 
 
 
@@ -91,4 +32,3 @@ class Table:
 
         for lines in self.cellsList:
             print(lines)
-

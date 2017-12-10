@@ -1,58 +1,29 @@
 from random import randint
 class Client:
 
-    bufferStock = {}
-    referenceBought = ''
-    amountBought = 0
 
-    def __init__(self,pStock):
-        self.bufferStock = pStock
-
-    def bought(self,pStock):
-
-        #Buffer the stock
-        self.bufferStock = pStock
-
-        #get list of the stock
-        itemsList = []
-
-        for key in self.bufferStock:
-            itemsList.append(key)
+    def askStock(self,pStock):
 
 
-        #Loop : Choose a random item to buy with an amount of it. It check if it's possible to buy it and remove things that can't be bought
+        #Ignore items with 0 amount
+        for key in list(pStock):
+            if pStock[key] == 0:
+                del pStock[key]
 
-        canBuy = True
+        stockLength = len(pStock)
 
-        while canBuy == True:
+        #Choose a random reference
+        randomNumber = randint(0, stockLength -1)
+        referencesNames = []
 
-            randomReference  = randint(0,len(itemsList)-1 )
-            referenceToBuy = itemsList[randomReference]
+        for keys in pStock.keys():
+            referencesNames.append(keys)
 
-            if self.bufferStock[referenceToBuy] > 0:
+        randomReference = referencesNames[randomNumber]
 
-                randomAmount = randint(1, self.bufferStock[referenceToBuy])
-                print("{1} : {0} ".format(randomAmount, referenceToBuy))
-                self.bufferStock[referenceToBuy] -= randomAmount
+        #Choose random amount
+        randomAmount = randint(1,pStock[randomReference])
 
-                #Save what is bought and how many in attribs to send them later to another class
-                self.amountBought = randomAmount
-                self.referenceBought = referenceToBuy
+        order = (randomReference,randomAmount)
 
-                canBuy = False
-            else:
-                del itemsList[randomReference]
-
-            if len(itemsList) == 0:
-                canBuy = False
-
-
-    def getBufferStock(self):
-        return self.bufferStock
-
-
-    def getReferecebought(self):
-        return self.referenceBought
-
-    def getAmountbought(self):
-        return self.amountBought
+        return order
