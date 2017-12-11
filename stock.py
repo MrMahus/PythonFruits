@@ -1,9 +1,6 @@
 class Stock:
-
-
-    #Attribs
+    # Attribs
     stock = {}
-
 
     def __init__(self, pStock):
 
@@ -12,20 +9,19 @@ class Stock:
         else:
             self.stock = pStock
 
+    # Check an order received
 
-    #Check an order received
-
-    def checkOrder(self,pOrder):
+    def checkOrder(self, pOrder):
 
         referenceCheck = False
         amountCheck = False
 
-        #Check if the reference asked is in the stock
+        # Check if the reference asked is in the stock
         for ref in self.stock.keys():
             if ref == pOrder[0]:
                 referenceCheck = True
 
-        #Check if the amount asked is correct and can be substracted from the stock
+        # Check if the amount asked is correct and can be substracted from the stock
         if self.stock[pOrder[0]] >= pOrder[1]:
             amountCheck = True
         else:
@@ -36,24 +32,19 @@ class Stock:
         else:
             return False
 
-
-
-    #Proceed an order checked
-    def proceedOrder(self,pOrder):
+    # Proceed an order checked
+    def proceedOrder(self, pOrder):
 
         self.stock[pOrder[0]] -= pOrder[1]
 
-
-    #Getter
+    # Getter
 
     def getStock(self):
         return self.stock
 
+    # Function to check the OutOfStock state
 
-
-    #Function to check the OutOfStock state
-
-    def checkOutOfStock(self,pStock):
+    def checkOutOfStock(self, pStock):
 
         noNull = 0
 
@@ -67,4 +58,3 @@ class Stock:
             return True
         else:
             return False
-
