@@ -5,6 +5,10 @@ class Table:
 
     # Attribs
 
+    first_col_length = 16
+    second_col_length = 18
+    third_col_length = 17
+
     header = \
         ''' _____________________________________________________
 |      Name      |  Current Amount  | Client Purchases|
@@ -29,18 +33,20 @@ class Table:
             if list(pStock.keys())[cursor] == pOrder[0]:
 
                 cell = '|' \
-                    + '{0}'.format(list(pStock.keys())[cursor]).center(16,
+                    + '{0}'.format(list(pStock.keys())[cursor]).center(self.first_col_length,
                         ' ') + '|' \
-                    + '{0}'.format(list(pStock.values())[cursor]).center(18,
+                    + '{0}'.format(list(pStock.values())[cursor]).center(self.second_col_length,
                         ' ') + '|' \
-                    + '-{0}'.format(pOrder[1]).center(17, ' ') \
+                    + '-{0}'.format(pOrder[1]).center(self.third_col_length,
+                        ' ') \
                     + '|\n|----------------|------------------|-----------------|'
             else:
                 cell = '|' \
-                    + '{0}'.format(list(pStock.keys())[cursor]).center(16,
+                    + '{0}'.format(list(pStock.keys())[cursor]).center(self.first_col_length,
                         ' ') + '|' \
-                    + '{0}'.format(list(pStock.values())[cursor]).center(18,
-                        ' ') + '|' + ''.center(17, ' ') \
+                    + '{0}'.format(list(pStock.values())[cursor]).center(self.second_col_length,
+                        ' ') + '|' + ''.center(self.third_col_length,
+                        ' ') \
                     + '|\n|----------------|------------------|-----------------|'
 
             self.cellsList.append(cell)
