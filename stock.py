@@ -1,11 +1,16 @@
+
+
+
 class Stock:
+
     # Attribs
+
     stock = {}
 
     def __init__(self, pStock):
 
         if type(pStock) != dict:
-            print("Error ! Type Dictionary not entered ! ")
+            print 'Error ! Type Dictionary not entered ! '
         else:
             self.stock = pStock
 
@@ -17,11 +22,13 @@ class Stock:
         amountCheck = False
 
         # Check if the reference asked is in the stock
+
         for ref in self.stock.keys():
             if ref == pOrder[0]:
                 referenceCheck = True
 
         # Check if the amount asked is correct and can be substracted from the stock
+
         if self.stock[pOrder[0]] >= pOrder[1]:
             amountCheck = True
         else:
@@ -33,6 +40,7 @@ class Stock:
             return False
 
     # Proceed an order checked
+
     def proceedOrder(self, pOrder):
 
         self.stock[pOrder[0]] -= pOrder[1]
@@ -58,3 +66,7 @@ class Stock:
             return True
         else:
             return False
+
+
+
+			
