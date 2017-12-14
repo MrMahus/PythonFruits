@@ -1,57 +1,94 @@
-
-
-
 class Table:
 
-    # Attribs
+    #Attribs
+    header = " _____________________________________________\n|      Name      |  Amount  | Client Purchases|\n|----------------|----------|-----------------|"
+    cell =   "                                              \n|                |          |                 |\n|----------------|----------|-----------------|"
 
-    first_col_length = 16
-    second_col_length = 18
-    third_col_length = 17
+    cellsList = []
 
-    header = " _____________________________________________________\n" \
-             "|      Name      |  Current Amount  | Client Purchases|\n" \
-             "|----------------|------------------|-----------------|"
-    cells_list = []
 
-    # Function to set the table
+    def formatTable(self,pStock,pBought):
 
-    def setTable(self, p_order, p_stock):
+        #Reset Table
+        self.cellsList = []
 
-        # Init the final list of table with the header
+        #Get what was bought and how many
+        referenceBought = pBought[0]
+        amountBought = pBought[1]
 
-        self.cells_list = [self.header]
+        #Determine how many cells are required by counting number of differents items in stock
+        cellsCounter = len(pStock)
 
-        # Loop to write all lines
+        #Split stock into two list to print them separately
+        fruitsList = []
+        amountList = []
 
-        stock_length = len(p_stock)
+        for key, value in pStock.items():
+            fruitsList.append(key)
+            amountList.append(value)
+
+
+        # Add the header of table
+        self.cellsList.append(self.header)
+
         cursor = 0
+        while cursor < cellsCounter:
 
-        while cursor < stock_length:
 
-            if list(p_stock.keys())[cursor] == p_order[0]:
 
-                cell = '|' \
-                    + '{0}'.format(list(p_stock.keys())[cursor]).center(self.first_col_length,
-                        ' ') + '|' \
-                    + '{0}'.format(list(p_stock.values())[cursor]).center(self.second_col_length,
-                        ' ') + '|' \
-                    + '-{0}'.format(p_order[1]).center(self.third_col_length,
-                        ' ') \
-                    + '|\n|----------------|------------------|-----------------|'
-            else:
-                cell = '|' \
-                    + '{0}'.format(list(p_stock.keys())[cursor]).center(self.first_col_length,
-                        ' ') + '|' \
-                    + '{0}'.format(list(p_stock.values())[cursor]).center(self.second_col_length,
-                        ' ') + '|' + ''.center(self.third_col_length,
-                        ' ') \
-                    + '|\n|----------------|------------------|-----------------|'
 
-            self.cells_list.append(cell)
+            #Create a buffer cell which will be edited
+            currentCell = list(self.cell)
+
+            #Split fruits name and amount to insert them into a string
+            currentFruit = list(fruitsList[cursor])
+            currentValue = list(str(amountList[cursor]))
+
+            #Insert name into the string
+            i = 0
+            for char in currentFruit:
+                currentCell[51+i] = char
+                i += 1
+
+            #Insert amount into the string
+            j = 0
+            for val in currentValue:
+                currentCell[68+j] = val
+                j += 1
+
+
+            #Add the edited cell with name and amount to a list to draw all of them later
+            processedCell = "".join(currentCell)
+            self.cellsList.append(processedCell)
+
+            #Increments cursor
             cursor += 1
+
+
+        #Insert the purchases
+        k = 0
+        index = 0
+        while index == 0:
+            if fruitsList[k] == referenceBought:
+                index = k + 1
+            k += 1
+
+        editLine = list(self.cellsList[index])
+        splitRef = list(str((amountBought)))
+
+        l = 0
+        for element in splitRef:
+            editLine[81] = '-'
+            editLine[82+l] = element
+            l += 1
+
+        processedLine = "".join(editLine)
+        self.cellsList[index] = processedLine
+
+
 
     def drawTable(self):
 
-        for lines in self.cells_list:
-            print (lines)
+        for lines in self.cellsList:
+            print(lines)
+

@@ -1,34 +1,58 @@
-
-
 from random import randint
-
-
 class Client:
 
-    def askStock(self, p_stock):
+    bufferStock = {}
+    referenceBought = ''
+    amountBought = 0
 
-        # Ignore items with 0 amount
+    def __init__(self,pStock):
+        self.bufferStock = pStock
 
-        for key in list(p_stock):
-            if p_stock[key] == 0:
-                del p_stock[key]
+    def bought(self,pStock):
 
-        stock_length = len(p_stock)
+        #Buffer the stock
+        self.bufferStock = pStock
 
-        # Choose a random reference
+        #get list of the stock
+        itemsList = []
 
-        random_number = randint(0, stock_length - 1)
-        references_names = []
+        for key in self.bufferStock:
+            itemsList.append(key)
 
-        for keys in p_stock.keys():
-            references_names.append(keys)
 
-        random_reference = references_names[random_number]
+        #Loop : Choose a random item to buy with an amount of it. It check if it's possible to buy it and remove things that can't be bought
 
-        # Choose random amount
+        canBuy = True
 
-        random_amount = randint(1, p_stock[random_reference])
+        while canBuy == True:
 
-        order = (random_reference, random_amount)
+            randomReference  = randint(0,len(itemsList)-1 )
+            referenceToBuy = itemsList[randomReference]
 
-        return order
+            if self.bufferStock[referenceToBuy] > 0:
+
+                randomAmount = randint(1, self.bufferStock[referenceToBuy])
+                print("{1} : {0} ".format(randomAmount, referenceToBuy))
+                self.bufferStock[referenceToBuy] -= randomAmount
+
+                #Save what is bought and how many in attribs to send them later to another class
+                self.amountBought = randomAmount
+                self.referenceBought = referenceToBuy
+
+                canBuy = False
+            else:
+                del itemsList[randomReference]
+
+            if len(itemsList) == 0:
+                canBuy = False
+
+
+    def getBufferStock(self):
+        return self.bufferStock
+
+
+    def getReferecebought(self):
+        return self.referenceBought
+
+    def getAmountbought(self):
+        return self.amountBought
