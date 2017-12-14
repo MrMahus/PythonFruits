@@ -7,43 +7,43 @@ class Stock:
 
     stock = {}
 
-    def __init__(self, pStock):
+    def __init__(self, p_stock):
 
-        if type(pStock) != dict:
-            print 'Error ! Type Dictionary not entered ! '
+        if type(p_stock) != dict:
+            print ('Error ! Type Dictionary not entered ! ')
         else:
-            self.stock = pStock
+            self.stock = p_stock
 
     # Check an order received
 
-    def checkOrder(self, pOrder):
+    def checkOrder(self, p_order):
 
-        referenceCheck = False
-        amountCheck = False
+        reference_check = False
+        amount_check = False
 
         # Check if the reference asked is in the stock
 
         for ref in self.stock.keys():
-            if ref == pOrder[0]:
-                referenceCheck = True
+            if ref == p_order[0]:
+                reference_check = True
 
         # Check if the amount asked is correct and can be substracted from the stock
 
-        if self.stock[pOrder[0]] >= pOrder[1]:
-            amountCheck = True
+        if self.stock[p_order[0]] >= p_order[1]:
+            amount_check = True
         else:
             pass
 
-        if referenceCheck == True and amountCheck == True:
+        if reference_check == True and amount_check == True:
             return True
         else:
             return False
 
     # Proceed an order checked
 
-    def proceedOrder(self, pOrder):
+    def proceedOrder(self, p_order):
 
-        self.stock[pOrder[0]] -= pOrder[1]
+        self.stock[p_order[0]] -= p_order[1]
 
     # Getter
 
@@ -52,21 +52,17 @@ class Stock:
 
     # Function to check the OutOfStock state
 
-    def checkOutOfStock(self, pStock):
+    def checkOutOfStock(self, p_stock):
 
-        noNull = 0
+        no_null = 0
 
-        for value in pStock.values():
+        for value in p_stock.values():
 
             if value != 0:
-                noNull += 1
+                no_null += 1
                 break
 
-        if noNull == 0:
+        if no_null == 0:
             return True
         else:
             return False
-
-
-
-			

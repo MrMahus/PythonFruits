@@ -5,34 +5,30 @@ from random import randint
 
 class Client:
 
-    def askStock(self, pStock):
+    def askStock(self, p_stock):
 
         # Ignore items with 0 amount
 
-        for key in list(pStock):
-            if pStock[key] == 0:
-                del pStock[key]
+        for key in list(p_stock):
+            if p_stock[key] == 0:
+                del p_stock[key]
 
-        stockLength = len(pStock)
+        stock_length = len(p_stock)
 
         # Choose a random reference
 
-        randomNumber = randint(0, stockLength - 1)
-        referencesNames = []
+        random_number = randint(0, stock_length - 1)
+        references_names = []
 
-        for keys in pStock.keys():
-            referencesNames.append(keys)
+        for keys in p_stock.keys():
+            references_names.append(keys)
 
-        randomReference = referencesNames[randomNumber]
+        random_reference = references_names[random_number]
 
         # Choose random amount
 
-        randomAmount = randint(1, pStock[randomReference])
+        random_amount = randint(1, p_stock[random_reference])
 
-        order = (randomReference, randomAmount)
+        order = (random_reference, random_amount)
 
         return order
-
-
-
-			

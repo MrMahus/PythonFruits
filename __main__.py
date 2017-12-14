@@ -1,18 +1,18 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-from stock import *
-from client import *
-from table import *
-from inputHandler import *
+
+
+from stock import Stock
+from client import Client
+from table import Table
+
 
 import sys
 import time
 
 # Variables
 
-fruitsList = []
-fruitsAmount = []
-stockFilled = False
+fruit_list = []
+fruit_amount = []
+stock_filled = False
 months = (
     'January',
     'February',
@@ -27,12 +27,36 @@ months = (
     'November',
     'December',
     )
-currentMonth = 0
-yearsPassed = 0
+current_month = 0
+years_passed = 0
 
-# Generate Input Handler
+# Function to handle int input
 
-input = Input()
+def inputInteger(p_string):
+    int_written = ''
+    while type(int_written) != int:
+        try:
+            int_written = int(input(p_string + '\n'))
+        except:
+            print('Character not allowed, enter a number')
+
+    return int_written
+
+# Function to put stock into dict
+
+def defineStock(p_number_of_references):
+    stock = {}
+
+    while p_number_of_references > 0:
+        key = str(input("Enter the fruit's name : \n"))
+
+        value = inputInteger('Enter the amount :')
+
+        stock.update({key: value})
+
+        p_number_of_references -= 1
+
+    return stock
 
 # Generate the table
 
@@ -44,15 +68,13 @@ client = Client()
 
 # Ask the user to set the stock
 
-numbersOfReferences = \
-    input.inputInteger('How many differents types of fruits would you stock ?'
-                       )
-stockDefined = input.defineStock(numbersOfReferences)
+number_of_references = inputInteger("How many differents types of fruits would you stock ?")
+stock_defined = defineStock(number_of_references)
 
 # Save the stock in database
 
-ourStock = Stock(stockDefined)
-stockFilled = True
+ourStock = Stock(stock_defined)
+stock_filled = True
 
 # Check if the stock is not empty
 
@@ -64,14 +86,14 @@ if ourStock.checkOutOfStock(ourStock.getStock()) == True:
 
 # Main loop
 
-while stockFilled == True:
+while stock_filled == True:
 
     # 'Erase'
     # print('\n' * 80)
 
     # Print the current month
 
-    print '-' + months[currentMonth] + '-'
+    print ('-' + months[current_month] + '-')
 
     # Client get the stock and ask an order
 
@@ -98,22 +120,18 @@ while stockFilled == True:
     # Check if the stock is not empty
 
     if ourStock.checkOutOfStock(ourStock.getStock()) == True:
-        stockFilled = False
+        stock_filled = False
 
     # Increments the month and check if it reach December
 
-    currentMonth += 1
+    current_month += 1
 
-    if currentMonth == 12:
-        currentMonth = 0
-        yearsPassed += 1
+    if current_month == 12:
+        current_month = 0
+        years_passed += 1
 
     time.sleep(1)
 
 # End of Loop
 
-print '''
- 
- You sell items during {0} years'''.format(yearsPassed)
-
-			
+print ('You sell items during {0} years'.format(years_passed))

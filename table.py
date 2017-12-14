@@ -9,54 +9,49 @@ class Table:
     second_col_length = 18
     third_col_length = 17
 
-    header = \
-        ''' _____________________________________________________
-|      Name      |  Current Amount  | Client Purchases|
-|----------------|------------------|-----------------|'''
-    cellsList = []
+    header = " _____________________________________________________\n" \
+             "|      Name      |  Current Amount  | Client Purchases|\n" \
+             "|----------------|------------------|-----------------|"
+    cells_list = []
 
     # Function to set the table
 
-    def setTable(self, pOrder, pStock):
+    def setTable(self, p_order, p_stock):
 
         # Init the final list of table with the header
 
-        self.cellsList = [self.header]
+        self.cells_list = [self.header]
 
         # Loop to write all lines
 
-        stockLength = len(pStock)
+        stock_length = len(p_stock)
         cursor = 0
 
-        while cursor < stockLength:
+        while cursor < stock_length:
 
-            if list(pStock.keys())[cursor] == pOrder[0]:
+            if list(p_stock.keys())[cursor] == p_order[0]:
 
                 cell = '|' \
-                    + '{0}'.format(list(pStock.keys())[cursor]).center(self.first_col_length,
+                    + '{0}'.format(list(p_stock.keys())[cursor]).center(self.first_col_length,
                         ' ') + '|' \
-                    + '{0}'.format(list(pStock.values())[cursor]).center(self.second_col_length,
+                    + '{0}'.format(list(p_stock.values())[cursor]).center(self.second_col_length,
                         ' ') + '|' \
-                    + '-{0}'.format(pOrder[1]).center(self.third_col_length,
+                    + '-{0}'.format(p_order[1]).center(self.third_col_length,
                         ' ') \
                     + '|\n|----------------|------------------|-----------------|'
             else:
                 cell = '|' \
-                    + '{0}'.format(list(pStock.keys())[cursor]).center(self.first_col_length,
+                    + '{0}'.format(list(p_stock.keys())[cursor]).center(self.first_col_length,
                         ' ') + '|' \
-                    + '{0}'.format(list(pStock.values())[cursor]).center(self.second_col_length,
+                    + '{0}'.format(list(p_stock.values())[cursor]).center(self.second_col_length,
                         ' ') + '|' + ''.center(self.third_col_length,
                         ' ') \
                     + '|\n|----------------|------------------|-----------------|'
 
-            self.cellsList.append(cell)
+            self.cells_list.append(cell)
             cursor += 1
 
     def drawTable(self):
 
-        for lines in self.cellsList:
-            print lines
-
-
-
-			
+        for lines in self.cells_list:
+            print (lines)
