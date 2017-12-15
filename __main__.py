@@ -37,7 +37,7 @@ def inputInteger(p_string):
     while type(int_written) != int:
         try:
             int_written = int(input(p_string + '\n'))
-        except:
+        except ValueError:
             print('Character not allowed, enter a number')
 
     return int_written
