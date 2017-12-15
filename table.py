@@ -2,7 +2,6 @@
 
 
 class Table:
-
     # Attribs
 
     first_col_length = 16

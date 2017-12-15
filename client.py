@@ -1,10 +1,7 @@
-
-
 from random import randint
 
 
 class Client:
-
     def askStock(self, p_stock):
 
         # Ignore items with 0 amount
